@@ -5,8 +5,7 @@
       "allow": ["net"],
       "cmd": "src/main/index.ts"
     },
-    "test": {
-      "cmd": "deno test tests/**.spec.ts"
-    }
+    "test": "deno test tests/**/*.spec.ts",
+    "test:watch": "deno test --watch tests/*/*/*.spec.ts"
   }
 }

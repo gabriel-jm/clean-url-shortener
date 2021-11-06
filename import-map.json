@@ -2,6 +2,8 @@
   "imports": {
     "test-suite": "https://deno.land/x/test_suite@0.9.0/mod.ts",
     "chai": "https://cdn.skypack.dev/chai@4.3.4?dts",
-    "http": "https://deno.land/std@0.113.0/http/mod.ts"
+    "http": "https://deno.land/std@0.113.0/http/mod.ts",
+    "@/": "./src/",
+    "@tests/": "./tests/"
   }
 }
