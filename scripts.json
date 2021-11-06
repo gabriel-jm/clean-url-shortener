@@ -1,0 +1,12 @@
+{
+  "imap": "import-map.json",
+  "scripts": {
+    "start": {
+      "allow": ["net"],
+      "cmd": "src/main/index.ts"
+    },
+    "test": {
+      "cmd": "deno test tests/**.spec.ts"
+    }
+  }
+}
