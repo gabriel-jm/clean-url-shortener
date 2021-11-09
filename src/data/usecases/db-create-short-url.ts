@@ -1,11 +1,11 @@
 import { CreateShortUrl } from '@/domain/usecases/index.ts'
-import { CheckUrlRegistryRepository } from '@/data/protocols/db/index.ts'
+import { FindUrlRegistryByUrlRepository } from '@/data/protocols/db/index.ts'
 
 export class DbCreateShortUrl implements CreateShortUrl {
-  constructor(private readonly checkUrlRegistryRepository: CheckUrlRegistryRepository) {}
+  constructor(private readonly findUrlRegistryByUrlRepository: FindUrlRegistryByUrlRepository) {}
   
   async create (url: string) {
-    await this.checkUrlRegistryRepository.checkByUrl(url)
+    await this.findUrlRegistryByUrlRepository.findByUrl(url)
 
     return ''
   }

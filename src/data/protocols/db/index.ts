@@ -1,1 +1,1 @@
-export * from './check-url-registry-repository.ts'
+export * from './find-url-registry-by-url-repository.ts'

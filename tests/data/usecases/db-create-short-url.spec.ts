@@ -2,25 +2,25 @@ import { describe, it } from 'test-suite'
 import { expect } from 'chai'
 
 import { DbCreateShortUrl } from '@/data/usecases/index.ts'
-import { mockCheckUrlRegistryRepository } from '@tests/data/mocks/index.ts'
+import { mockFindUrlRegistryByUrlRepository } from '@tests/data/mocks/index.ts'
 
 function makeSut() {
-  const checkUrlRegistryRepositorySpy = mockCheckUrlRegistryRepository()
+  const findUrlRegistryByUrlRepositorySpy = mockFindUrlRegistryByUrlRepository()
   
-  const sut = new DbCreateShortUrl(checkUrlRegistryRepositorySpy)
+  const sut = new DbCreateShortUrl(findUrlRegistryByUrlRepositorySpy)
 
   return {
     sut,
-    checkUrlRegistryRepositorySpy
+    findUrlRegistryByUrlRepositorySpy
   }
 }
 
 describe('DbCreateShortUrl', () => {
-  it('should call CheckUrlRegistryRepository with correct values', async () => {
-    const { sut, checkUrlRegistryRepositorySpy } = makeSut()
+  it('should call FindUrlRegistryByUrlRepository with correct values', async () => {
+    const { sut, findUrlRegistryByUrlRepositorySpy } = makeSut()
 
     await sut.create('any_url')
 
-    expect(checkUrlRegistryRepositorySpy.checkByUrlParams).to.equal('any_url')
+    expect(findUrlRegistryByUrlRepositorySpy.findByUrlParams).to.equal('any_url')
   })
 })

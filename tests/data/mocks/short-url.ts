@@ -1,10 +1,10 @@
-export const mockCheckUrlRegistryRepository = () => {
+export const mockFindUrlRegistryByUrlRepository = () => {
   return {
-    result: true,
-    checkByUrlParams: <string | null> null,
+    result: 'any_hash',
+    findByUrlParams: <string | null> null,
     
-    checkByUrl(url: string) {
-      this.checkByUrlParams = url
+    findByUrl(url: string) {
+      this.findByUrlParams = url
       return Promise.resolve(this.result)
     }
   }
