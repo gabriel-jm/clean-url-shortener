@@ -5,7 +5,9 @@ export class DbCreateShortUrl implements CreateShortUrl {
   constructor(private readonly findUrlRegistryByUrlRepository: FindUrlRegistryByUrlRepository) {}
   
   async create (url: string) {
-    await this.findUrlRegistryByUrlRepository.findByUrl(url)
+    const urlRegistry = await this.findUrlRegistryByUrlRepository.findByUrl(url)
+
+    if (urlRegistry) return urlRegistry
 
     return ''
   }

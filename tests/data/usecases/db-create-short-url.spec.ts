@@ -23,4 +23,13 @@ describe('DbCreateShortUrl', () => {
 
     expect(findUrlRegistryByUrlRepositorySpy.findByUrlParams).to.equal('any_url')
   })
+
+  it('should return the url registry if FindUrlRegistryByUrlRepository finds one', async () => {
+    const { sut, findUrlRegistryByUrlRepositorySpy } = makeSut()
+    findUrlRegistryByUrlRepositorySpy.result = 'any_url_registry'
+
+    const response = await sut.create('any_url')
+
+    expect(response).to.equal('any_url_registry')
+  })
 })

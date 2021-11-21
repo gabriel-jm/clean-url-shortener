@@ -1,6 +1,6 @@
 export const mockFindUrlRegistryByUrlRepository = () => {
   return {
-    result: 'any_hash',
+    result: <string | null> null,
     findByUrlParams: <string | null> null,
     
     findByUrl(url: string) {
