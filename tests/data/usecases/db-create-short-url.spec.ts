@@ -2,16 +2,20 @@ import { describe, it } from 'test-suite'
 import { expect } from 'chai'
 
 import { DbCreateShortUrl } from '@/data/usecases/index.ts'
-import { mockFindUrlRegistryByUrlRepository } from '@tests/data/mocks/index.ts'
+import { mockFindUrlRegistryByUrlRepository, mockHashGenerator } from '../mocks/index.ts'
 
 function makeSut() {
   const findUrlRegistryByUrlRepositorySpy = mockFindUrlRegistryByUrlRepository()
+  const hashGeneratorSpy = mockHashGenerator()
+
+  console.log(mockHashGenerator())
   
-  const sut = new DbCreateShortUrl(findUrlRegistryByUrlRepositorySpy)
+  const sut = new DbCreateShortUrl(findUrlRegistryByUrlRepositorySpy, hashGeneratorSpy)
 
   return {
     sut,
-    findUrlRegistryByUrlRepositorySpy
+    findUrlRegistryByUrlRepositorySpy,
+    hashGeneratorSpy
   }
 }
 
@@ -31,5 +35,13 @@ describe('DbCreateShortUrl', () => {
     const response = await sut.create('any_url')
 
     expect(response).to.equal('any_url_registry')
+  })
+
+  it('should call HashGenerator with correct values', async () => {
+    const { sut, hashGeneratorSpy } = makeSut()
+    
+    await sut.create('any_url')
+
+    expect(hashGeneratorSpy.hasCalledGenerate).to.equal(true)
   })
 })
