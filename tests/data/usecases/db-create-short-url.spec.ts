@@ -1,21 +1,30 @@
 import { describe, it } from 'test-suite'
 import { expect } from 'chai'
+import sinon from 'sinon'
 
 import { DbCreateShortUrl } from '@/data/usecases/index.ts'
-import { mockFindUrlRegistryByUrlRepository, mockHashGenerator } from '../mocks/index.ts'
+import {
+  mockFindUrlRegistryByUrlRepository,
+  mockHashGenerator,
+  mockSaveUrlRegistryRepository
+} from '../mocks/index.ts'
 
 function makeSut() {
   const findUrlRegistryByUrlRepositorySpy = mockFindUrlRegistryByUrlRepository()
   const hashGeneratorSpy = mockHashGenerator()
-
-  console.log(mockHashGenerator())
+  const saveUrlRegistryRepositorySpy = mockSaveUrlRegistryRepository()
   
-  const sut = new DbCreateShortUrl(findUrlRegistryByUrlRepositorySpy, hashGeneratorSpy)
+  const sut = new DbCreateShortUrl(
+    findUrlRegistryByUrlRepositorySpy,
+    hashGeneratorSpy,
+    saveUrlRegistryRepositorySpy
+  )
 
   return {
     sut,
     findUrlRegistryByUrlRepositorySpy,
-    hashGeneratorSpy
+    hashGeneratorSpy,
+    saveUrlRegistryRepositorySpy
   }
 }
 
@@ -43,5 +52,21 @@ describe('DbCreateShortUrl', () => {
     await sut.create('any_url')
 
     expect(hashGeneratorSpy.hasCalledGenerate).to.equal(true)
+  })
+
+  it('should call SaveUrlRegistryRepository with correct values', async () => {
+    const { sut, hashGeneratorSpy, saveUrlRegistryRepositorySpy } = makeSut()
+
+    const fakeDate = new Date('2021-05-01')
+
+    sinon.stub(globalThis, 'Date').returns(fakeDate as unknown as string)
+
+    await sut.create('any_url')
+
+    expect(saveUrlRegistryRepositorySpy.saveParams).to.eql({
+      url: 'any_url',
+      hash: hashGeneratorSpy.result,
+      expirationDate: fakeDate.setDate(fakeDate.getDate() + 15)
+    })
   })
 })

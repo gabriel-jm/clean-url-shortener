@@ -7,6 +7,6 @@
       "cmd": "src/main/index.ts"
     },
     "test": "deno test tests/**/*.spec.ts",
-    "test:watch": "deno test -r --watch tests/*/*/*.spec.ts"
+    "test:watch": "deno test --watch tests/*/*/*.spec.ts"
   }
 }
