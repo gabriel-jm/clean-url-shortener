@@ -29,6 +29,6 @@ export class DbCreateShortUrl implements CreateShortUrl {
       expirationDate
     })
 
-    return ''
+    return hash
   }
 }

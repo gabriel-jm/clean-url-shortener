@@ -67,4 +67,12 @@ describe('DbCreateShortUrl', () => {
     expect(saveUrlRegistryRepositorySpy.saveParams).to.have.property('hash', 'any_hash')
     expect(saveUrlRegistryRepositorySpy.saveParams).to.have.property('url', 'any_url')
   })
+
+  it('should return the hash on success', async () => {
+    const { sut } = makeSut()
+
+    const response = await sut.create('any_url')
+
+    expect(response).to.equal('any_hash')
+  })
 })
