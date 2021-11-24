@@ -5,5 +5,5 @@ export interface SaveUrlRegistryRepositoryParams {
 }
 
 export interface SaveUrlRegistryRepository {
-  save(params: SaveUrlRegistryRepositoryParams): Promise<string>
+  save(params: SaveUrlRegistryRepositoryParams): Promise<void>
 }
