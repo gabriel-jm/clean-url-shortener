@@ -1,4 +1,4 @@
-import { describe, it } from 'test-suite'
+import { describe, it, afterAll } from 'test-suite'
 import { expect } from 'chai'
 import sinon from 'sinon'
 
@@ -55,18 +55,16 @@ describe('DbCreateShortUrl', () => {
   })
 
   it('should call SaveUrlRegistryRepository with correct values', async () => {
-    const { sut, hashGeneratorSpy, saveUrlRegistryRepositorySpy } = makeSut()
-
-    const fakeDate = new Date('2021-05-01')
-
-    sinon.stub(globalThis, 'Date').returns(fakeDate as unknown as string)
+    const { sut, saveUrlRegistryRepositorySpy } = makeSut()
 
     await sut.create('any_url')
 
-    expect(saveUrlRegistryRepositorySpy.saveParams).to.eql({
-      url: 'any_url',
-      hash: hashGeneratorSpy.result,
-      expirationDate: fakeDate.setDate(fakeDate.getDate() + 15)
-    })
+    const fakeDate = new Date()
+    fakeDate.setDate(fakeDate.getDate() + 15)
+
+    expect(saveUrlRegistryRepositorySpy.saveParams?.expirationDate.getDate())
+      .to.equal(fakeDate.getDate())
+    expect(saveUrlRegistryRepositorySpy.saveParams).to.have.property('hash', 'any_hash')
+    expect(saveUrlRegistryRepositorySpy.saveParams).to.have.property('url', 'any_url')
   })
 })
