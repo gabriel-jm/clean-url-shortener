@@ -14,12 +14,11 @@ export function mockFindUrlRegistryByUrlRepository() {
 
 export function mockSaveUrlRegistryRepository() {
   return {
-    result: 'any_shortened_url',
     saveParams: {} as SaveUrlRegistryRepositoryParams,
 
     save(params: SaveUrlRegistryRepositoryParams) {
       this.saveParams = params
-      return Promise.resolve(this.result)
+      return Promise.resolve()
     }
   }
 }

@@ -6,7 +6,7 @@
       "allow": ["net"],
       "cmd": "src/main/index.ts"
     },
-    "test": "deno test tests/**/*.spec.ts",
-    "test:watch": "deno test --location=http://localhost --watch tests/*/*/*.spec.ts"
+    "test": "deno test tests/",
+    "test:watch": "deno test --location=http://localhost --watch tests/"
   }
 }
