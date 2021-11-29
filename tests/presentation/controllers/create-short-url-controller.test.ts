@@ -1,5 +1,6 @@
 import { describe, it } from 'test-suite'
 import { expect } from 'chai'
+import sinon from 'sinon'
 
 import { CreateShortUrlController } from '@/presentation/controllers/index.ts'
 import { mockCreateShortUrl } from '../mocks/index.ts'
@@ -22,6 +23,16 @@ describe('Create Short URL Controller', () => {
     await sut.handle({ url: 'any_url' })
 
     expect(createShortUrlSpy.createParams).to.equal('any_url')
+  })
+
+  it('should throw if CreateShortUrl throws', () => {
+    const { sut, createShortUrlSpy } = makeSut()
+    sinon.stub(createShortUrlSpy, 'create').throws(new Error())
+
+    sut.handle({ url: 'any_url' })
+      .catch(error => {
+        expect(error).to.be.instanceOf(Error)
+      })
   })
 
   it('should return a redirect response on success', async () => {
