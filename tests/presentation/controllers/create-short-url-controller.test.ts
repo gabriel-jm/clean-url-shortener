@@ -23,4 +23,17 @@ describe('Create Short URL Controller', () => {
 
     expect(createShortUrlSpy.createParams).to.equal('any_url')
   })
+
+  it('should return a redirect response on success', async () => {
+    const { sut } = makeSut()
+
+    const response = await sut.handle({ url: 'any_url' })
+
+    expect(response).to.eql({
+      statusCode: 308,
+      body: {
+        hash: 'any_hash'
+      }
+    })
+  })
 })
