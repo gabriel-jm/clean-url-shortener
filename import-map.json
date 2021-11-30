@@ -4,6 +4,7 @@
     "chai": "https://cdn.skypack.dev/chai@4.3.4?dts",
     "sinon": "http://esm.sh/sinon@12.0.1",
     "http": "https://deno.land/std@0.113.0/http/mod.ts",
+    "io": "https://deno.land/std@0.116.0/io/mod.ts",
     "@/": "./src/",
     "@tests/": "./tests/"
   }

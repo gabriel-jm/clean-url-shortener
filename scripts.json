@@ -1,6 +1,5 @@
 {
   "imap": "import-map.json",
-  "tsconfig": "tsconfig.json",
   "scripts": {
     "start": {
       "allow": ["net"],
