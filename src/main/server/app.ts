@@ -33,7 +33,11 @@ export async function handleRequest(request: Request) {
   const routeMatch = matchRoute(request.method.toLowerCase(), pathname)
 
   if (routeMatch) {
-    return routeMatch.handler({ params: routeMatch.params, body })
+    return routeMatch.handler({
+      request,
+      params: routeMatch.params,
+      body
+    })
   }
 
   return new Response('Not Found', {

@@ -1,9 +1,5 @@
 import { router } from '@/main/server/router.ts'
+import { adaptRoute } from '@/main/adapters/adapt-routes.ts'
+import { makeCreateShortURLController } from '@/main/factories/index.ts'
 
-router.post('/hash', ({ body }) => {
-  return new Response(JSON.stringify(body), {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
-})
+router.post('/short-url', adaptRoute(makeCreateShortURLController()))

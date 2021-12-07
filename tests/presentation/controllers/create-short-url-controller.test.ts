@@ -41,9 +41,9 @@ describe('Create Short URL Controller', () => {
     const response = await sut.handle({ url: 'any_url' })
 
     expect(response).to.eql({
-      statusCode: 308,
+      statusCode: 200,
       body: {
-        hash: 'any_hash'
+        url: 'any_hash'
       }
     })
   })

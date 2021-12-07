@@ -1,9 +1,10 @@
 export interface RequestData {
+  request: Request
   params: Record<string, string>
   body: string | Record<string, unknown> | null
 }
 
-type RouteHandler = (requestData: RequestData) => Response
+type RouteHandler = (requestData: RequestData) => Response | Promise<Response>
 
 const routes: Record<string, RouteHandler> = {}
 
