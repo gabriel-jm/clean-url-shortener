@@ -1,3 +1,6 @@
+import '../routes/short-url.ts'
+import { matchRoute } from './router.ts'
+
 async function parseIncomingBody(request: Request) {
   const { body } = request
   
@@ -15,9 +18,11 @@ async function parseIncomingBody(request: Request) {
   })
 
   await body.pipeTo(writeStream)
-  return dataArray.reduce((acc, value) => {
+  const textData = dataArray.reduce((acc, value) => {
     return acc + new TextDecoder('utf-8').decode(value)
   }, '')
+
+  return JSON.parse(textData)
 }
 
 export async function handleRequest(request: Request) {
@@ -25,7 +30,14 @@ export async function handleRequest(request: Request) {
 
   const body = await parseIncomingBody(request)
 
-  return new Response('hello', {
+  const routeMatch = matchRoute(request.method.toLowerCase(), pathname)
+
+  if (routeMatch) {
+    return routeMatch.handler({ params: routeMatch.params, body })
+  }
+
+  return new Response('Not Found', {
+    status: 404,
     headers: {
       'content-type': 'text/plain'
     }
