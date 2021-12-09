@@ -12,6 +12,18 @@ export function mockFindUrlRegistryByUrlRepository() {
   }
 }
 
+export function mockFindUrlByHashRepository() {
+  return {
+    findByHashParams: <string | null> null,
+    result: <string | null> null,
+
+    findByHash(hash: string) {
+      this.findByHashParams = hash
+      return Promise.resolve(this.result)
+    }
+  }
+}
+
 export function mockSaveUrlRegistryRepository() {
   return {
     saveParams: {} as SaveUrlRegistryRepositoryParams,
