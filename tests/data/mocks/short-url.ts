@@ -1,4 +1,4 @@
-import { SaveUrlRegistryRepositoryParams } from '@/data/protocols/db/index.ts'
+import { SaveUrlRegistryRepositoryParams, FindUrlRegistryByHashRepositoryResult } from '@/data/protocols/db/index.ts'
 
 export function mockFindUrlRegistryByUrlRepository() {
   return {
@@ -12,10 +12,14 @@ export function mockFindUrlRegistryByUrlRepository() {
   }
 }
 
-export function mockFindUrlByHashRepository() {
+export function mockFindUrlRegistryByHashRepository() {
   return {
     findByHashParams: <string | null> 'any_url',
-    result: <string | null> null,
+    result: <FindUrlRegistryByHashRepositoryResult | null> {
+      id: 'any_id',
+      url: 'any_url',
+      expirationDate: new Date()
+    },
 
     findByHash(hash: string) {
       this.findByHashParams = hash
@@ -30,6 +34,17 @@ export function mockSaveUrlRegistryRepository() {
 
     save(params: SaveUrlRegistryRepositoryParams) {
       this.saveParams = params
+      return Promise.resolve()
+    }
+  }
+}
+
+export function mockDeleteUrlRegistryRepository() {
+  return {
+    deleteParams: <string|null> null,
+
+    delete(id: string) {
+      this.deleteParams = id
       return Promise.resolve()
     }
   }

@@ -1,5 +1,9 @@
-export type FindUrlByHashRepositoryResult = string | null
+export type FindUrlRegistryByHashRepositoryResult = null | {
+  id: string
+  url: string
+  expirationDate: Date
+}
 
-export interface FindUrlByHashRepository {
-  findByHash(hash: string): Promise<FindUrlByHashRepositoryResult>
+export interface FindUrlRegistryByHashRepository {
+  findByHash(hash: string): Promise<FindUrlRegistryByHashRepositoryResult>
 }
