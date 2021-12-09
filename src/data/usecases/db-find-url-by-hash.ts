@@ -7,7 +7,7 @@ export class DbFindUrlByHash implements FindUrlByHash {
   async find(hash: string, today: Date) {
     const url = await this.findUrlByHashRepository.findByHash(hash)
 
-    if (url) return url
+    if (!url) return null
 
     return ''
   }

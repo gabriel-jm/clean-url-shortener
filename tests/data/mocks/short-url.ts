@@ -14,7 +14,7 @@ export function mockFindUrlRegistryByUrlRepository() {
 
 export function mockFindUrlByHashRepository() {
   return {
-    findByHashParams: <string | null> null,
+    findByHashParams: <string | null> 'any_url',
     result: <string | null> null,
 
     findByHash(hash: string) {

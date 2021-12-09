@@ -23,12 +23,12 @@ describe('DbFindUrlByHash', () => {
     expect(findUrlByHashRepositorySpy.findByHashParams).to.equal('any_hash')
   })
 
-  it('should return the url if FindUrlByHashRepository finds one', async () => {
+  it('should return null if FindUrlByHashRepository not finds one', async () => {
     const { sut, findUrlByHashRepositorySpy } = makeSut()
-    findUrlByHashRepositorySpy.result = 'any_url'
+    findUrlByHashRepositorySpy.result = null
 
-    const hash = await sut.find('any_hash', new Date())
+    const url = await sut.find('any_hash', new Date())
 
-    expect(hash).to.equal('any_url')
+    expect(url).to.equal(null)
   })
 })
