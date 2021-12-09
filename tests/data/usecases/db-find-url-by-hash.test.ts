@@ -37,7 +37,7 @@ describe('DbFindUrlByHash', () => {
     expect(url).to.equal(null)
   })
 
-  it('should call DeleteUrlRegistry if it is expired', async () => {
+  it('should call DeleteUrlRegistryRepository if finded url registry is expired', async () => {
     const {
       sut,
       findUrlRegistryByHashRepositorySpy,
@@ -53,5 +53,19 @@ describe('DbFindUrlByHash', () => {
     await sut.find('any_hash', new Date('2021-10-03'))
 
     expect(deleteUrlRegistryRepositorySpy.deleteParams).to.equal('any_id')
+  })
+
+  it('should return null if finded url registry is expired', async () => {
+    const { sut, findUrlRegistryByHashRepositorySpy } = makeSut()
+
+    findUrlRegistryByHashRepositorySpy.result = {
+      id: 'any_id',
+      url: 'any_url',
+      expirationDate: new Date('2021-10-02')
+    }
+
+    const url = await sut.find('any_hash', new Date('2021-10-03'))
+
+    expect(url).to.equal(null)
   })
 })

@@ -16,6 +16,7 @@ export class DbFindUrlByHash implements FindUrlByHash {
 
     if (isExpired) {
       await this.deleteUrlRegistryRepository.delete(urlRegistry.id)
+      return null
     }
 
     return ''
