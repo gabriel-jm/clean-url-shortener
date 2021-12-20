@@ -68,4 +68,12 @@ describe('DbFindUrlByHash', () => {
 
     expect(url).to.equal(null)
   })
+
+  it('should return the url string on success', async () => {
+    const { sut, findUrlRegistryByHashRepositorySpy } = makeSut()
+
+    const response = await sut.find('any_hash', new Date())
+
+    expect(response).to.equal(findUrlRegistryByHashRepositorySpy.result?.url)
+  })
 })

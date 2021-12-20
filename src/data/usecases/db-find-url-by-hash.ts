@@ -19,6 +19,6 @@ export class DbFindUrlByHash implements FindUrlByHash {
       return null
     }
 
-    return ''
+    return urlRegistry.url
   }
 }
