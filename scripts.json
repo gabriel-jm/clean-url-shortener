@@ -1,5 +1,5 @@
 {
-  "imap": "import-map.json",
+  "importMap": "import-map.json",
   "scripts": {
     "start": {
       "allow": ["net"],

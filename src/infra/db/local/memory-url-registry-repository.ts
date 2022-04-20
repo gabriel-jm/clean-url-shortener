@@ -1,7 +1,9 @@
 import {
   FindUrlRegistryByUrlRepository,
   SaveUrlRegistryRepository,
-  SaveUrlRegistryRepositoryParams
+  SaveUrlRegistryRepositoryParams,
+  FindUrlRegistryByHashRepository,
+  DeleteUrlRegistryRepository
 } from '@/data/protocols/db/index.ts'
 
 interface UrlRegistry {
@@ -13,13 +15,28 @@ interface UrlRegistry {
 
 const db: UrlRegistry[] = []
 
-export class MemoryUrlRegistryRepository implements FindUrlRegistryByUrlRepository, SaveUrlRegistryRepository {
+type Repository = (
+  FindUrlRegistryByUrlRepository
+  & SaveUrlRegistryRepository
+  & FindUrlRegistryByHashRepository
+  & DeleteUrlRegistryRepository
+)
+
+export class MemoryUrlRegistryRepository implements Repository {
   findByUrl(url: string) {
     const urlRegistry = db.find(urlRegistry => {
       return urlRegistry.url === url
     })
 
     return Promise.resolve(urlRegistry?.url ?? null)
+  }
+
+  findByHash(hash: string) {
+    const urlRegistry = db.find(urlRegistry => {
+      return urlRegistry.hash === hash
+    })
+
+    return Promise.resolve(urlRegistry ?? null)
   }
 
   save({ url, hash, expirationDate }: SaveUrlRegistryRepositoryParams) {
@@ -30,6 +47,13 @@ export class MemoryUrlRegistryRepository implements FindUrlRegistryByUrlReposito
       expirationDate
     })
     
+    return Promise.resolve()
+  }
+
+  delete(id: string) {
+    const itemIndex = db.findIndex(item => item.id === id)
+    db.splice(itemIndex, 1)
+
     return Promise.resolve()
   }
 }
