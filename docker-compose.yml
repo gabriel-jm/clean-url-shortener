@@ -1,0 +1,44 @@
+services:
+  app:
+    image: denoland/deno:alpine-1.20.6
+    container_name: 'clean-url-shortener'
+    user: 1000:1000
+    working_dir: /app
+    ports:
+      - 8000:8000
+    depends_on:
+      - pg
+    volumes:
+      - .:/app
+    command: deno run --allow-net --importmap=./import-map.json ./src/main/index.ts
+
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+      - ./database/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@email.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - 4500:80
+    depends_on:
+      - pg
+
+  pg-tests:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5433:5432
+    volumes:
+      - ./database/scripts:/docker-entrypoint-initdb.d
